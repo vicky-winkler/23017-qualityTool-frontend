@@ -3,10 +3,10 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import MainModeLayout from "../components/Layouts/MainModeLayout.vue"
 import LoginView from "../views/LoginView.vue"
 import MainScreenView from "../views/MainScreenView.vue"
-import BoxedView from "../views/BoxedView.vue"
-import OrderView from "../views/OrderView.vue"
-import PackagingView from "../views/PackagingView.vue"
-import StockView from "../views/StockView.vue";
+import BoxView from "../views/BoxView.vue";
+import BootView from "../views/BootView.vue";
+import MeasurementMultiView from "../views/MeasurementMultiView.vue";
+import MeasurementSingleView from "../views/MeasurementSingleView.vue";
 
 
 const routes = [
@@ -33,38 +33,38 @@ const routes = [
         },
       },
       {
-        path: "/boxedView",
-        name: "boxedView",
-        component: BoxedView,
-        meta: {
-          requiresAuth: true,
-          requiresAdmin: true,
-        },
-      },
-      {
-        path: "/orderView",
-        name: "orderView",
-        component: OrderView,
+        path: "/boxView",
+        name: "boxView",
+        component: BoxView,
         meta: {
           requiresAuth: true,
           requiresAdmin: false,
         },
       },
       {
-        path: "/packagingView",
-        name: "packagingView",
-        component: PackagingView,
+        path: "/bootView",
+        name: "bootView",
+        component: BootView,
+        meta: {
+          requiresAuth: true,
+          requiresAdmin: false,
+        },
+      },
+      {
+        path: "/measurementSingleView",
+        name: "measurementSingleView",
+        component: MeasurementSingleView,
         meta: {
           requiresAuth: true,
           requiresAdmin: false,
         },
       },{
-        path: "/stockView",
-        name: "stockView",
-        component: StockView,
+        path: "/measurementMultiView",
+        name: "measurementMultiView",
+        component: MeasurementMultiView,
         meta: {
           requiresAuth: true,
-          requiresAdmin: true,
+          requiresAdmin: false,
         },
       },
       

@@ -10,6 +10,7 @@ import Lara from '@primevue/themes/lara';
 import './index.css'
 import 'primeicons/primeicons.css'
 
+
 // primevue styled
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
@@ -23,9 +24,8 @@ import ToastService from 'primevue/toastservice';
 import MainModeLayout from "./components/Layouts/MainModeLayout.vue";
 import VueApexCharts from "vue3-apexcharts";
 
-import VueCountdown from '@chenfengyuan/vue-countdown';
-
-
+// Icons
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 
 const app = createApp(App)
@@ -48,9 +48,6 @@ app.component("MainModeLayout", MainModeLayout)
 // PrimeVue
 app.component('DataTable', DataTable);
 app.component('Column', Column);
-
-// Countdown
-app.component(VueCountdown.name, VueCountdown);
 
 app.use(router) //use router
 

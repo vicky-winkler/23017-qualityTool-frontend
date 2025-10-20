@@ -22,64 +22,53 @@
   <div class="pl-12 pr-12 pt-6 card ">
     <div class="flex justify-center gap-6">
     
-      <!-- Button Packaging -->
-      <router-link v-if="orderStore.orderId !== 0 && orderStore.totAmount != orderStore.doneAmount" style="width: 33%;" :to="{ name: 'packagingView' }">
+      <!-- Button Package -->
+      <router-link style="width: 33%;" :to="{ name: 'boxView' }">
         <Button 
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold  rounded-none text-center"
           style="border-radius: 0px; height: 70vh;  width: 100%;" label="Delete" severity="info">
           <div class="flex-col">
             <i class="pi pi-box" style="font-size: 4rem"></i>
-            <p class="text-3xl uppercase">Packaging</p>
+            <p class="text-3xl uppercase">Packages</p>
           </div>
         </Button>
       </router-link>
 
-      <!-- Button Order -->
-      <router-link style="width: 33%;" :to="{ name: 'orderView' }">
+      <!-- Button Boot -->
+      <router-link style="width: 33%;" :to="{ name: 'bootView' }">
         <Button 
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-none text-center"
           style="border-radius: 0px; height: 70vh; width: 100%;" label="Delete" severity="info">
-
           <div class="flex-col">
-            <i class="pi pi-shopping-cart" style="font-size: 4rem"></i>
-            <p class="text-3xl uppercase">Order</p>
+            <i class="fa-solid fa-shoe-prints" style="font-size: 4rem"></i>
+            <p class="text-3xl uppercase">Shoes</p>
           </div>
         </Button>
       </router-link>
 
-      <!-- Button Boxed -->
-      <router-link style="width: 33%;" :to="{ name: 'boxedView' }">
+      <!-- Button Measurement Single -->
+      <router-link style="width: 33%;" :to="{ name: 'measurementSingleView' }">
         <Button 
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold  rounded-none text-center"
           style="border-radius: 0px; height: 70vh;  width: 100%;" label="Delete" severity="info">
           <div class="flex-col">
-            <i class="pi pi-warehouse" style="font-size: 4rem"></i>
-            <p class="text-3xl uppercase">Boxed</p>
+            <i class="pi pi-chart-line" style="font-size: 4rem"></i>
+            <p class="text-3xl uppercase">Single-Loadcell Measurements</p>
           </div>
         </Button>
       </router-link>
 
-      <!-- Button Stock -->
-      <router-link v-if="isAdmin === 'true'" style="width: 33%;" :to="{ name: 'stockView' }">
+      <!-- Button Measurement Multi -->
+      <router-link style="width: 33%;" :to="{ name: 'measurementMultiView' }">
         <Button 
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold  rounded-none text-center"
           style="border-radius: 0px; height: 70vh;  width: 100%;" label="Delete" severity="info">
           <div class="flex-col">
-            <i class="pi pi-inbox" style="font-size: 4rem"></i>
-            <p class="text-3xl uppercase">Stock</p>
+            <i class="pi pi-chart-scatter" style="font-size: 4rem"></i>
+            <p class="text-3xl uppercase">7-Loadcells Measurements</p>
           </div>
         </Button>
       </router-link>
-
-      <!-- Button Shutdown -->
-      <Button class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-none text-center"
-        @click="confirmShutdown()" style="border-radius: 0px; min-width: 20%; width: 33%;" label="Delete"
-        severity="danger">
-        <div class="flex-col">
-          <i class="pi pi-power-off" style="font-size: 4rem"></i>
-          <p class="text-3xl uppercase">Shut down</p>
-        </div>
-      </Button>
 
     </div>
   </div>
@@ -90,20 +79,7 @@
     <img src="../assets/imgs/logos/tratter.png" alt="Image Tratter" width="340"/>
   </div>
 
-  <!-- FOOTER - INFO on Order -->
-  <!-- Currently Selected Order -->
-  <div v-if="orderStore.orderId !== 0" class="pl-12 pr-12 pt-6 pb-6 justify-end footer-bottom">
-      <div class="pt-2 pb-2 pl-6 pr-6 flex justify-between bg-zinc-800 text-white text-xl">
-        <div class="flex">
-          <p class="">Selected Order: &nbsp;</p>
-          <p class=" font-bold">{{ orderStore.kitType }}&nbsp;</p>
-          <p class="">- {{ orderStore.orderId }}</p>
-        </div>
-        <p class="flex">Amount: {{ orderStore.doneAmount }} / {{ orderStore.totAmount }}</p>
-      </div>
-  </div>
 
-  <ConfirmDialog></ConfirmDialog>
 
 </template>
 
@@ -115,10 +91,8 @@ import router from '../router';
 import { Buffer } from 'buffer';
 
 // Graphic Components
-import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
-import ConfirmDialog from "primevue/confirmdialog";
 import Button from "primevue/button";
 
 // Messaging & Commands
@@ -127,7 +101,6 @@ import { connection, establishConnection } from '../services/websocket/mainWebSo
 import { frontEndCommand } from '../services/backendMessaging/backendCommands';
 
 // Stores & Data
-import { useOrderStore } from '../store/orderStore';
 import { useOverallStore } from '../store/overallStore';
 
 
@@ -135,10 +108,8 @@ import { useOverallStore } from '../store/overallStore';
 
 window.Buffer = Buffer;
 
-const confirm = useConfirm();
 const toast = useToast();
 const isAdmin = ref(localStorage.getItem("adminToken"))
-const orderStore = useOrderStore();
 const overallStore = useOverallStore();
 
 onMounted(() => {
@@ -169,30 +140,6 @@ const logout = () => {
   }
 }
 
-const confirmShutdown = () => {
-  confirm.require({
-    message: 'Are you sure you want to proceed?',
-    header: 'Teststation Shutdown',
-    rejectProps: {
-      label: 'Cancel',
-      severity: 'contrast',
-      outlined: false
-
-    },
-    acceptProps: {
-      label: 'Shut down',
-      severity: 'danger'
-    },
-    accept: () => {
-      toast.add({ severity: 'contrast', summary: 'Confirmed', detail: 'Teststation is shutting down...', life: 5000 });
-      frontEndCommand(connection, FrontEndCommand.ShutDown)
-      console.log("notified backend about system shutdown " + FrontEndCommand.ShutDown);
-    },
-    reject: () => {
-      toast.add({ severity: 'contrast', summary: 'Rejected', detail: 'Shutdown cancelled', life: 3000 });
-    }
-  });
-};
 </script>
 
 
