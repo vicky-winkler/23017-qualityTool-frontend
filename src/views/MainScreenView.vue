@@ -73,7 +73,7 @@
     </div>
   </div>
 
-    <!-- LOGOS -->
+  <!-- LOGOS -->
   <div class="pl-12 pr-12 pt-6 pb-6 card flex justify-between footer-bottom">
     <img src="../assets/imgs/logos/consteed_wide_yellow.png" alt="Image Consteed" width="340"/>
     <img src="../assets/imgs/logos/tratter.png" alt="Image Tratter" width="340"/>
