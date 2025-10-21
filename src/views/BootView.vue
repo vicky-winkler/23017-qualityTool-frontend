@@ -12,7 +12,7 @@
 
     <!-- Table with packages -->
     <div class="pl-12 pr-12 pt-6">
-
+      <BootTableComponent/>
     </div>
 
     <!-- Currently Selected Package FOOTER (v-if="")-->
@@ -52,7 +52,7 @@ import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 
 // Custom Components
-
+import BootTableComponent from "../components/Layouts/BootComponents/BootTableComponent.vue";
 
 
 
