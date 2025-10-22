@@ -152,6 +152,7 @@ const onRowSelect = (event) => {
   singleCellStore.singleCell = event.data;
   console.log("Selected singleCell:", singleCellStore.singleCell);
   selectedDataSet.value = event.data;
+  singleCellStore.detailsModal = true;
 };
 
 

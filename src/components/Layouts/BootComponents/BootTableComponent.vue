@@ -158,8 +158,9 @@ const filteredBoots = computed(() => {
 const onRowSelect = (event) => {
   // add to bootStore
   bootStore.boot = event.data;
-  console.log("Selected boot:", bootStore.boot);
+  // console.log("Selected boot:", bootStore.boot);
   selectedDataSet.value = event.data;
+  bootStore.detailsModal = true;
 };
 
 

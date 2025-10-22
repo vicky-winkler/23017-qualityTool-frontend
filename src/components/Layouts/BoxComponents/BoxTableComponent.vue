@@ -152,6 +152,7 @@ const onRowSelect = (event) => {
   boxStore.box = event.data;
   console.log("Selected box:", boxStore.box);
   selectedDataSet.value = event.data;
+  boxStore.detailsModal = true;
 };
 
 

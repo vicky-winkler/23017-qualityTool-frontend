@@ -10,21 +10,29 @@
   </div>
 
 
-    <!-- Table with packages -->
-    <div class="pl-12 pr-12 pt-6">
-      <BootTableComponent/>
+  <!-- Table with packages -->
+  <div class="pl-12 pr-12 pt-6">
+    <BootTableComponent/>
+  </div>
+
+  <!-- Currently Selected Package FOOTER (v-if="")-->
+  <div v-if="true" class="pl-12 pr-12 pt-6 pb-6 justify-end footer-bottom">
+    <div class="pt-2 pb-2 pl-6 pr-6 flex justify-between bg-zinc-800 text-white text-xl">
+
     </div>
+  </div>
 
-    <!-- Currently Selected Package FOOTER (v-if="")-->
-    <div v-if="true" class="pl-12 pr-12 pt-6 pb-6 justify-end footer-bottom">
-      <div class="pt-2 pb-2 pl-6 pr-6 flex justify-between bg-zinc-800 text-white text-xl">
-
-      </div>
-    </div>
-
-
-
-  
+  <!-- Details Modal -->
+  <template>
+    <Dialog v-model:visible="bootStore.detailsModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">
+        <template #header>
+          <div class="flex items-center justify-between py-2 text-white rounded-t-md">
+            <h3 class="text-lg font-semibold">Boot Details {{ bootStore.boot.sensorSerialNumber }}</h3>
+          </div>
+        </template>
+        <!-- Details Modal Component -->
+    </Dialog>
+  </template>
 
   <Toast position="bottom-center" />
 </template>
@@ -42,7 +50,7 @@ import { FrontEndCommand } from '../services/backendMessaging/commandEnums';
 import { frontEndCommand, decodeMessage } from '../services/backendMessaging/backendCommands';
 
 // Stores & Data
-
+import { useBootStore } from "../store/bootStore";
 
 // Primevue Components
 import Button from 'primevue/button';
@@ -60,7 +68,7 @@ import BootTableComponent from "../components/Layouts/BootComponents/BootTableCo
 
 // init stores
 const toast = useToast();
-
+const bootStore = useBootStore();
 
 
 
@@ -81,6 +89,8 @@ onUnmounted(() => {
   if (connection) {
     frontEndCommand(connection, FrontEndCommand.MainScreenView);
   }
+    // update bootStore
+  bootStore.resetStore();
 })
 
 
