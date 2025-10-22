@@ -1,19 +1,19 @@
-// SELECTED BOOT
+// SELECTED Box
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-export const useBootStore = defineStore('boot', () => {
+export const useBoxStore = defineStore('box', () => {
     
-    const boot = ref(null);
+    const box = ref(null);
 
     function resetStore(){
-        boot.value = null;
+        box.value = null;
     }
 
     
     // expose
     return { 
-        boot,
+        box,
         resetStore,
 
     }

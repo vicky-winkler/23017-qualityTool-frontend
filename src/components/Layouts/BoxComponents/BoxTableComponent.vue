@@ -57,7 +57,7 @@ import InputText from 'primevue/inputtext';
 
 // Data and Stores
 import { API }  from "../../../services/api/index";
-
+import { useBoxStore } from "../../../store/boxStore";
 
 /* CODE STARTS HERE */
 // init stores
@@ -66,7 +66,9 @@ const isAdmin = ref(localStorage.getItem("adminToken"))
 
 // local variables
 const boxes = ref();
+const selectedDataSet = ref(null);
 const filterText = ref("");
+const boxStore = useBoxStore();
 
 // DataTable
 const filters = ref({
@@ -146,15 +148,18 @@ const filteredBoxes = computed(() => {
 
 // when selecting a row
 const onRowSelect = (event) => {
-    // add to bootStore
-
+  // add to boxStore
+  boxStore.box = event.data;
+  console.log("Selected box:", boxStore.box);
+  selectedDataSet.value = event.data;
 };
 
 
 // when unselecting a row
 const onRowUnselect = (event) => {
-    // update bootStore
-
+  // update boxStore
+  boxStore.resetStore();
+  selectedDataSet.value = null;
 };
 
 

@@ -63,7 +63,7 @@ import InputText from 'primevue/inputtext';
 
 // Data and Stores
 import { API }  from "../../../services/api/index";
-
+import { useBootStore } from "../../../store/bootStore";
 
 /* CODE STARTS HERE */
 // init stores
@@ -72,7 +72,9 @@ const isAdmin = ref(localStorage.getItem("adminToken"))
 
 // local variables
 const boots = ref();
+const selectedDataSet = ref(null);
 const filterText = ref("");
+const bootStore = useBootStore();
 
 // DataTable
 const filters = ref({
@@ -154,15 +156,18 @@ const filteredBoots = computed(() => {
 
 // when selecting a row
 const onRowSelect = (event) => {
-    // add to bootStore
-
+  // add to bootStore
+  bootStore.boot = event.data;
+  console.log("Selected boot:", bootStore.boot);
+  selectedDataSet.value = event.data;
 };
 
 
 // when unselecting a row
 const onRowUnselect = (event) => {
-    // update bootStore
-
+  // update bootStore
+  bootStore.resetStore();
+  selectedDataSet.value = null;
 };
 
 

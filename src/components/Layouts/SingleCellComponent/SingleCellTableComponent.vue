@@ -60,7 +60,7 @@ import InputText from 'primevue/inputtext';
 
 // Data and Stores
 import { API }  from "../../../services/api/index";
-
+import{ useSingleCellStore } from "../../../store/singleCellStore";
 
 /* CODE STARTS HERE */
 // init stores
@@ -69,7 +69,9 @@ const isAdmin = ref(localStorage.getItem("adminToken"))
 
 // local variables
 const qualitySingles = ref();
+const selectedDataSet = ref(null);
 const filterText = ref("");
+const singleCellStore = useSingleCellStore()
 
 // DataTable
 const filters = ref({
@@ -146,15 +148,18 @@ const filteredQualitySingles = computed(() => {
 
 // when selecting a row
 const onRowSelect = (event) => {
-    // add to bootStore
-
+  // add to singleCell
+  singleCellStore.singleCell = event.data;
+  console.log("Selected singleCell:", singleCellStore.singleCell);
+  selectedDataSet.value = event.data;
 };
 
 
 // when unselecting a row
 const onRowUnselect = (event) => {
-    // update bootStore
-
+  // update singleCell
+  singleCellStore.resetStore();
+  selectedDataSet.value = null;
 };
 
 

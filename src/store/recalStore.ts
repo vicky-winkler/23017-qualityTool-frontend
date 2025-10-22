@@ -1,19 +1,19 @@
-// SELECTED BOOT
+// SELECTED Recal
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-export const useBootStore = defineStore('boot', () => {
+export const useRecalStore = defineStore('recal', () => {
     
-    const boot = ref(null);
+    const recal = ref(null);
 
     function resetStore(){
-        boot.value = null;
+        recal.value = null;
     }
 
     
     // expose
     return { 
-        boot,
+        recal,
         resetStore,
 
     }
