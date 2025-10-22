@@ -12,7 +12,7 @@
 
     <!-- Table with packages -->
     <div class="pl-12 pr-12 pt-6">
-
+      <SingleCellTableComponent/>
     </div>
 
     <!-- Currently Selected Package FOOTER (v-if="")-->
@@ -22,9 +22,6 @@
       </div>
     </div>
 
-
-
-  
 
   <Toast position="bottom-center" />
 </template>
@@ -52,7 +49,7 @@ import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 
 // Custom Components
-
+import SingleCellTableComponent from "../components/Layouts/SingleCellComponent/SingleCellTableComponent.vue";
 
 
 

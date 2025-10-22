@@ -3,7 +3,7 @@ export interface Box {
     orderId: number;
     kitType: String;
     serialNumber: String;
-    matrikelNumber: number;
+    matrikelNummer: number;
     timeStamp: Date;
     sensorTestIds: number[];
     sensorTestRFIDs: String[];
