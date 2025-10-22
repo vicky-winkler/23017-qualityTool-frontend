@@ -4,6 +4,15 @@
     <div class="bg-zinc-900" style="width: 100%">
       <h1 class="p-2 pl-6 font-bold bg-zinc-800 uppercase text-white text-left text-3xl">PACKAGE-PANEL</h1>
     </div>
+    <!-- Export Button -->
+    <button style="width: 20%;"
+      class=" bg-orange-400 hover:bg-red-400 text-white py-2 px-4 rounded-none text-center"
+      @click="boxStore.exportModal = true">
+      <div class="flex gap-8">
+            <i class="pi pi-file-export" style="font-size: 2rem"></i>
+            <p class="text-3xl font-bold">Export</p>
+          </div>
+    </button>
     <router-link style="width: 20%" :to="{ name: 'mainScreenView' }"
       class="bg-sky-500 hover:bg-sky-400 text-white font-bold py-3 px-4 rounded-none uppercase text-xl text-center">Back to Menu
     </router-link>
@@ -34,6 +43,18 @@
     </Dialog>
   </template>
 
+  <!-- Export Modal -->
+  <template>
+    <Dialog v-model:visible="boxStore.exportModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">
+        <template #header>
+          <div class="flex items-center justify-between py-2 text-white rounded-t-md">
+            <h3 class="text-lg font-semibold">Box Export</h3>
+          </div>
+        </template>
+        <!-- Export Modal Component -->
+    </Dialog>
+  </template>
+  
   
 
   <Toast position="bottom-center" />
