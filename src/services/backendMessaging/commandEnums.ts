@@ -14,6 +14,7 @@ const enum FrontEndCommand
     BoxView = 130,
     MeasurementSingleView = 140,
     MeasurementMultiView = 150,
+    RFID = 160,
 
 }
 

@@ -29,7 +29,7 @@
           style="border-radius: 0px; height: 70vh;  width: 100%;" label="Delete" severity="info">
           <div class="flex-col">
             <i class="pi pi-box" style="font-size: 4rem"></i>
-            <p class="text-3xl uppercase">Packages</p>
+            <p class="mt-3 text-3xl uppercase">Packages</p>
           </div>
         </Button>
       </router-link>
@@ -41,7 +41,7 @@
           style="border-radius: 0px; height: 70vh; width: 100%;" label="Delete" severity="info">
           <div class="flex-col">
             <i class="fa-solid fa-shoe-prints" style="font-size: 4rem"></i>
-            <p class="text-3xl uppercase">Shoes</p>
+            <p class="mt-3 text-3xl uppercase">Shoes</p>
           </div>
         </Button>
       </router-link>
@@ -53,7 +53,7 @@
           style="border-radius: 0px; height: 70vh;  width: 100%;" label="Delete" severity="info">
           <div class="flex-col">
             <i class="pi pi-chart-line" style="font-size: 4rem"></i>
-            <p class="text-3xl uppercase">Single-Loadcell Measurements</p>
+            <p class="mt-3 text-3xl uppercase">Single-Loadcell Measurements</p>
           </div>
         </Button>
       </router-link>
@@ -65,7 +65,18 @@
           style="border-radius: 0px; height: 70vh;  width: 100%;" label="Delete" severity="info">
           <div class="flex-col">
             <i class="pi pi-chart-scatter" style="font-size: 4rem"></i>
-            <p class="text-3xl uppercase">7-Loadcells Measurements</p>
+            <p class="mt-3 text-3xl uppercase">7-Loadcells Measurements</p>
+          </div>
+        </Button>
+      </router-link>
+      <!-- Button RFID -->
+      <router-link style="width: 33%;" :to="{ name: 'rfidView' }">
+        <Button 
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold  rounded-none text-center"
+          style="border-radius: 0px; height: 70vh;  width: 100%;" label="Delete" severity="info">
+          <div class="flex-col">
+            <i class="fa-brands fa-nfc-directional" style="font-size: 4rem"></i>
+            <p class="mt-3 text-3xl uppercase">RFID</p>
           </div>
         </Button>
       </router-link>

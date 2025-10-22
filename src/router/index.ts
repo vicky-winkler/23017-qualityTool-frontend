@@ -7,7 +7,7 @@ import BoxView from "../views/BoxView.vue";
 import BootView from "../views/BootView.vue";
 import MeasurementMultiView from "../views/MeasurementMultiView.vue";
 import MeasurementSingleView from "../views/MeasurementSingleView.vue";
-
+import RFIDView from "../views/RFIDView.vue"
 
 const routes = [
   {
@@ -58,10 +58,20 @@ const routes = [
           requiresAuth: true,
           requiresAdmin: false,
         },
-      },{
+      },
+      {
         path: "/measurementMultiView",
         name: "measurementMultiView",
         component: MeasurementMultiView,
+        meta: {
+          requiresAuth: true,
+          requiresAdmin: false,
+        },
+      },
+      {
+        path: "/rfidView",
+        name: "rfidView",
+        component: RFIDView,
         meta: {
           requiresAuth: true,
           requiresAdmin: false,
