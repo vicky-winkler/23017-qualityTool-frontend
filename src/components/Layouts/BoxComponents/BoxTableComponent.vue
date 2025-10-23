@@ -3,7 +3,7 @@
   <div class="mb-3 flex items-center gap-8">
     <InputText 
       v-model="filterText" 
-      placeholder="Search OrderId, KitType, SerialNumber, TimeStamp, Creator Id"
+      placeholder="Search OrderId, KitType, SerialNumber, TimeStamp, Creator Id, SensorSerialNumber, RFID, MacAddress or EcuDeviceId"
       style="width: 100%;"
     />
   </div>
@@ -26,7 +26,7 @@
         <Column field="serialNumber" header="Serialnumber" sortable style="min-width: 6rem; font-size:medium;"></Column>
         <Column field="matrikelNummer" header="Creator Id" sortable style="min-width: 6rem; font-size:medium;"></Column>
         <!-- <Column field="timeStamp" header="Timestamp" sortable style="min-width: 10rem; font-size:x-large;"></Column> -->
-        <Column header="Created" class="p-0 m-0" sortable style="width: 10%; font-size:medium;">
+        <Column header="Created" class="p-0 m-0" sortable style="width: 20%; font-size:medium;">
             <template #body="slotProps">
                 <p>{{ formatTimestamp(slotProps.data.timeStamp) }}</p>
             </template>
@@ -128,18 +128,35 @@ const filteredBoxes = computed(() => {
     const formattedDateDE = date.toLocaleDateString("de-DE"); // e.g. "21.10.2025"
     const formattedDateISO = date.toISOString().split("T")[0]; // e.g. "2025-10-21"
 
-    // Collect searchable fields (numbers are converted to strings)
-    const fields = [
+    // Collect base fields
+    const baseFields = [
       b.orderId,
       b.kitType,
       b.serialNumber,
       b.matrikelNummer,
       formattedDateDE,
       formattedDateISO,
+      b.language,
+      b.version,
     ];
 
-    // Return true if any field includes the search term
-    return fields.some((val) => {
+    // Apply hyphenation to each ECU device ID for better matching
+    const ecuHyphenated = (b.ecuDeviceIds || []).map(deviceIdHyphenated);
+
+    // Safely flatten array fields
+    const arrayFields = [
+      ...(b.sensorTestRFIDs || []),
+      ...(b.sensorSerialNumbers || []),
+      ...(b.macAddresses || []),
+      ...(b.ecuDeviceIds || []),
+      ...ecuHyphenated,          // hyphenated
+    ];
+
+    // Combine everything into one searchable list
+    const allFields = [...baseFields, ...arrayFields];
+
+    // Return true if *any* field (stringified) matches search
+    return allFields.some((val) => {
       if (val === null || val === undefined) return false;
       return val.toString().toLowerCase().includes(search);
     });

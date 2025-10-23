@@ -26,7 +26,7 @@
         <Column field="ecuDeviceIdHyphenated" header="Device Id" sortable style="min-width: 6rem; font-size:medium;"></Column>
         <Column field="userMatrikelNumber" header="Creator Id" sortable style="min-width: 6rem; font-size:medium;"></Column>
         <!-- <Column field="timeStamp" header="Timestamp" sortable style="min-width: 10rem; font-size:x-large;"></Column> -->
-        <Column header="Created" class="p-0 m-0" sortable style="width: 10%; font-size:medium;">
+        <Column header="Created" class="p-0 m-0" sortable style="width: 20%; font-size:medium;">
             <template #body="slotProps">
                 <p>{{ formatTimestamp(slotProps.data.timeStamp) }}</p>
             </template>

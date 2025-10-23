@@ -36,10 +36,11 @@
     <Dialog v-model:visible="singleCellStore.detailsModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">
         <template #header>
           <div class="flex items-center justify-between py-2 text-white rounded-t-md">
-            <h3 class="text-lg font-semibold">Single Cell Details {{ singleCellStore.singleCell.id }}</h3>
+            <h3 class="text-3xl">Single Cell Details: {{ singleCellStore.singleCell.id }}</h3>
           </div>
         </template>
         <!-- Details Modal Component -->
+         <SingleCellDetailsComponent/>
     </Dialog>
   </template>
 
@@ -48,7 +49,7 @@
     <Dialog v-model:visible="singleCellStore.exportModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">
         <template #header>
           <div class="flex items-center justify-between py-2 text-white rounded-t-md">
-            <h3 class="text-lg font-semibold">Single Cell Export</h3>
+            <h3 class="text-3xl">Single Cell Export</h3>
           </div>
         </template>
         <!-- Export Modal Component -->
@@ -82,7 +83,7 @@ import { useToast } from "primevue/usetoast";
 
 // Custom Components
 import SingleCellTableComponent from "../components/Layouts/SingleCellComponent/SingleCellTableComponent.vue";
-
+import SingleCellDetailsComponent from "../components/Layouts/SingleCellComponent/SingleCellDetailsComponent.vue";
 
 
 /* CODE STARTS HERE */

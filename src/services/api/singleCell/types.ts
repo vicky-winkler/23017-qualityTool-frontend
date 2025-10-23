@@ -1,8 +1,8 @@
 export interface QualitySingles {
     id: number;
-    TargetPressures: number[];
+    targetPressures: number[];
     calculatedPressures: number[];
-    resultPressures: number[];
+    resultPressure: number[];
     timeStamp: Date;
     userMatrikelNumber: number;
     status: Boolean[];

@@ -10,13 +10,15 @@ export interface Boot {
     pressure3: number;
     pressure4: number;
     pressure5: number;
-    targetPressures: number[];
-    minPressures: number[];
-    maxPressures: number[];
+    targetPressure: number[];
     status: Boolean[];
-    r_temp_avg: number;
-    externalTemperatureSensorAvg: number;
     adValues: String;
     timeStamp: Date;
     userMatrikelNumber: number;
+    r_Temp_Avg: number;
+    externalTemperatureSensorAvg: number;
+    minPressure: number[];
+    maxPressure: number[];
+    r_Fix: number[];
+
   };

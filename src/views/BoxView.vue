@@ -36,10 +36,11 @@
     <Dialog v-model:visible="boxStore.detailsModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">
         <template #header>
           <div class="flex items-center justify-between py-2 text-white rounded-t-md">
-            <h3 class="text-lg font-semibold">Box Details {{ boxStore.box.serialNumber }}</h3>
+            <h3 class="text-3xl">Box Details: {{ boxStore.box.serialNumber }}</h3>
           </div>
         </template>
         <!-- Details Modal Component -->
+         <BoxDetailsComponent/>
     </Dialog>
   </template>
 
@@ -48,7 +49,7 @@
     <Dialog v-model:visible="boxStore.exportModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">
         <template #header>
           <div class="flex items-center justify-between py-2 text-white rounded-t-md">
-            <h3 class="text-lg font-semibold">Box Export</h3>
+            <h3 class="text-3xl">Box Export</h3>
           </div>
         </template>
         <!-- Export Modal Component -->
@@ -73,7 +74,7 @@ import { FrontEndCommand } from '../services/backendMessaging/commandEnums';
 import { frontEndCommand, decodeMessage } from '../services/backendMessaging/backendCommands';
 
 // Stores & Data
-
+import { useBoxStore } from "../store/boxStore";
 
 // Primevue Components
 import Button from 'primevue/button';
@@ -84,7 +85,7 @@ import { useToast } from "primevue/usetoast";
 
 // Custom Components
 import BoxTableComponent from "../components/Layouts/BoxComponents/BoxTableComponent.vue";
-import { useBoxStore } from "../store/boxStore";
+import BoxDetailsComponent from "../components/Layouts/BoxComponents/BoxDetailsComponent.vue";
 
 
 /* CODE STARTS HERE */

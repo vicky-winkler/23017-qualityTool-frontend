@@ -100,6 +100,12 @@ async function loadData(){
     // console.log('API raw response:', response);
     if (Array.isArray(response)) {
 
+      if (Array.isArray(response.status)) {
+        response.status = response.status.map(s =>
+          s === true || s === "true" || s === 1 || s === "1"
+        );
+      }
+
       // Sort newest first (descending by timeStamp)
       response.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
 

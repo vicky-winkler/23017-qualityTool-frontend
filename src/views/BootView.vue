@@ -36,19 +36,20 @@
     <Dialog v-model:visible="bootStore.detailsModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">
         <template #header>
           <div class="flex items-center justify-between py-2 text-white rounded-t-md">
-            <h3 class="text-lg font-semibold">Boot Details {{ bootStore.boot.sensorSerialNumber }}</h3>
+            <h3 class="text-3xl">Boot Details: {{ bootStore.boot.sensorSerialNumber }}</h3>
           </div>
         </template>
         <!-- Details Modal Component -->
+         <BootDetailsComponent/>
     </Dialog>
   </template>
 
-    <!-- Export Modal -->
+  <!-- Export Modal -->
   <template>
     <Dialog v-model:visible="bootStore.exportModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">
         <template #header>
           <div class="flex items-center justify-between py-2 text-white rounded-t-md">
-            <h3 class="text-lg font-semibold">Boot Export</h3>
+            <h3 class="text-3xl">Boot Export</h3>
           </div>
         </template>
         <!-- Export Modal Component -->
@@ -83,7 +84,7 @@ import { useToast } from "primevue/usetoast";
 
 // Custom Components
 import BootTableComponent from "../components/Layouts/BootComponents/BootTableComponent.vue";
-
+import BootDetailsComponent from "../components/Layouts/BootComponents/BootDetailsComponent.vue";
 
 
 /* CODE STARTS HERE */
