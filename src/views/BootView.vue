@@ -24,13 +24,6 @@
     <BootTableComponent/>
   </div>
 
-  <!-- Currently Selected Package FOOTER (v-if="")-->
-  <div v-if="true" class="pl-12 pr-12 pt-6 pb-6 justify-end footer-bottom">
-    <div class="pt-2 pb-2 pl-6 pr-6 flex justify-between bg-zinc-800 text-white text-xl">
-
-    </div>
-  </div>
-
   <!-- Details Modal -->
   <template>
     <Dialog v-model:visible="bootStore.detailsModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">

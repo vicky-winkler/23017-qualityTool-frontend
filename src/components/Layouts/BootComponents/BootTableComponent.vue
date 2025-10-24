@@ -13,7 +13,7 @@
         :value="filteredBoots" 
         dataKey="id"
         :paginator="true" 
-        :rows="12" 
+        :rows="14" 
         :filters="filters"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
@@ -31,7 +31,7 @@
                 <p>{{ formatTimestamp(slotProps.data.timeStamp) }}</p>
             </template>
         </Column>
-        <!-- STATUS FAIL / PASS -->
+        <!-- STATUS FAIL / PASS  style="margin: 0; width: 80px; font-size: 0.85rem; border-radius: 2px; height: 24px; align-items: center; padding: 0.2rem 0 !important; "-->
         <Column header="Status" class="p-0 m-0" sortable style="width: 10%; font-size:medium;">
             <template #body="slotProps">
                 <Tag :value="setStatus(slotProps.data.status)" :severity="getSeverity(slotProps.data.status)" /> 
@@ -247,5 +247,23 @@ defineExpose({
   @apply text-sm text-white;
 }
 
+::v-deep(.p-tag) {
+  margin: 0 !important;
+  width: 80px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.85rem;
+  border-radius: 2px !important;
+  line-height: 1 !important;
+  padding-top: 5px !important;
+}
+
+::v-deep(.p-tag .p-tag-value) {
+  padding: 0 !important;
+  line-height: 1 !important;
+}
 
 </style>

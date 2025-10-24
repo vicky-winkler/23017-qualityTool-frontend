@@ -13,7 +13,7 @@
         :value="filteredConditionedSensors" 
         dataKey="id"
         :paginator="true" 
-        :rows="12" 
+        :rows="14"
         :filters="filters"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
@@ -89,7 +89,11 @@ onMounted(async () => {
 
 // load Data from DB
 async function loadData(){
-    console.log('fetch data...');
+
+  // reset
+  reset();
+
+  console.log('fetch data...');
   try {
     // Fetch from API
     const response = await API.conditionedSensor.getAll();
@@ -183,6 +187,13 @@ function formatTimestamp(timestamp) {
   return `${day}.${month}.${year} ${hours}:${minutes}`;
 }
 
+
+// reset Component
+function reset(){
+  conditionedSensorStore.resetStore();
+  selectedDataSet.value = null;
+  filterText.value = ""
+}
 
 
 defineExpose({

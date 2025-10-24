@@ -43,7 +43,7 @@
         </button>
         <button
           v-else
-          class="px-3 py-1 text-zinc-500"
+          class="px-3 py-1 text-zinc-900" :disabled="true"
           >
           <div class="flex">
             <i class="pi pi-arrow-left text-xl"></i>
@@ -66,7 +66,7 @@
         </button>
         <button
           v-else
-          class="px-3 py-1 text-zinc-500"
+          class="px-3 py-1 text-zinc-900" :disabled="true"
           >
           <div class="flex">
             <i class="pi pi-arrow-right text-xl"></i>

@@ -20,17 +20,17 @@
     <div class="flex gap-8">
       <!-- Replace Input Field -->
       <InputText v-model="replaceRfid" placeholder="Replace RFID e.g. 04299E2A2F1590" style="width: 50%;"/>
-      <!-- Left Arrow -->
+      <!-- Replace Button -->
       <button
-        class="" @click="submitReplace" :disabled="replaceRfid == ''" >
-        <!-- disabled -->
-        <div v-if="replaceRfid == ''" class="bg-emerald-600 px-4 py-3 text-black bg-emerald-400 rounded">
-          <p>Replace RFID</p>
-        </div>
-        <!-- enabled -->
-        <div v-else class="px-4 py-3 text-black bg-emerald-400 hover:bg-emerald-600 rounded">
-          <p>Replace RFID</p>
-        </div>
+        @click="submitReplace"
+        :disabled="replaceRfid.length !== 14"
+        class="rounded px-4 py-3 text-black"
+        :class="{
+          'bg-emerald-400 hover:bg-emerald-600': replaceRfid.length === 14,
+          'bg-emerald-600 opacity-50 cursor-not-allowed': replaceRfid.length !== 14
+        }"
+      >
+        Replace RFID
       </button>
     </div>
     <!-- Error Input -->

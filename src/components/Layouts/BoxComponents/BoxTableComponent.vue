@@ -13,7 +13,7 @@
         :value="filteredBoxes" 
         dataKey="id"
         :paginator="true" 
-        :rows="12" 
+        :rows="14" 
         :filters="filters"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
