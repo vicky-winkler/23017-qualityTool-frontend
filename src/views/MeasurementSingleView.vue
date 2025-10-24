@@ -36,7 +36,7 @@
     <Dialog v-model:visible="singleCellStore.detailsModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">
         <template #header>
           <div class="flex items-center justify-between py-2 text-white rounded-t-md">
-            <h3 class="text-3xl">Single Cell Details: {{ singleCellStore.singleCell.id }}</h3>
+            <h3 class="text-3xl">Single Cell: {{ singleCellStore.singleCell.id }}</h3>
           </div>
         </template>
         <!-- Details Modal Component -->

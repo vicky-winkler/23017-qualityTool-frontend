@@ -4,17 +4,17 @@
     <div class="grid grid-cols-4 mb-4">
         <div class="font-medium mb-2">Id</div>
         <div>{{ bootStore.boot.id }}</div>
-        <div class="font-medium">Sensor Id</div>
+        <div class="font-medium">Calibration Id</div>
         <div>{{ bootStore.boot.sensorId }}</div>
         <div class="font-medium mb-2">RFID</div>
         <div>{{ bootStore.boot.rfid }}</div>
-        <div class="font-medium">SensorSerialNumber</div>
+        <div class="font-medium">Sensor Serialnumber</div>
         <div>{{ bootStore.boot.sensorSerialNumber }}</div>
         <div class="font-medium mb-2">Creator Id</div>
         <div>{{ bootStore.boot.userMatrikelNumber }}</div>
         <div class="font-medium">TimeStamp</div>
         <div>{{ formatTimestamp(bootStore.boot.timeStamp) }}</div>
-        <div class="font-medium mb-2">EcuDeviceId</div>
+        <div class="font-medium mb-2">Ecu Device Id</div>
         <div>{{ deviceIdHyphenated(bootStore.boot.ecuDeviceId) }}</div>
         <div class="font-medium">Mac-Address</div>
         <div class="mb-2">{{ bootStore.boot.macAddress }}</div>
@@ -68,7 +68,7 @@ import { onMounted, onUnmounted, ref } from 'vue';
 
 
 // Stores & Data
-
+import { useBootStore } from "../../../store/bootStore";
 
 // Primevue Components
 import Button from 'primevue/button';
@@ -78,7 +78,7 @@ import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 
 // Custom Components
-import { useBootStore } from "../../../store/bootStore";
+
 
 
 /* CODE STARTS HERE */

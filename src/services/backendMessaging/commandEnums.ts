@@ -11,7 +11,9 @@ const enum FrontEndCommand
     LogoutUser = 112,      // CMD
 
     BootView = 120,
+    RecalBoot = 121,    // CMD + DATA
     BoxView = 130,
+    RecalBox = 131,     // CMD + DATA
     MeasurementSingleView = 140,
     MeasurementMultiView = 150,
     RFID = 160,

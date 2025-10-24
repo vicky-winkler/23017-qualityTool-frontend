@@ -36,7 +36,7 @@
     <Dialog v-model:visible="bootStore.detailsModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">
         <template #header>
           <div class="flex items-center justify-between py-2 text-white rounded-t-md">
-            <h3 class="text-3xl">Boot Details: {{ bootStore.boot.sensorSerialNumber }}</h3>
+            <h3 class="text-3xl">Boot: {{ bootStore.boot.sensorSerialNumber }}</h3>
           </div>
         </template>
         <!-- Details Modal Component -->
@@ -70,7 +70,7 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import slip from 'slip';
 import { connection } from '../services/websocket/mainWebSocket';
 import { FrontEndCommand } from '../services/backendMessaging/commandEnums';
-import { frontEndCommand, decodeMessage } from '../services/backendMessaging/backendCommands';
+import { frontEndCommand, decodeMessage, frontEndSettingsData } from '../services/backendMessaging/backendCommands';
 
 // Stores & Data
 import { useBootStore } from "../store/bootStore";
@@ -131,6 +131,21 @@ const decoder = new slip.Decoder({
     maxMessageSize: 209715200,
     bufferSize: 2048,
 });
+
+
+
+
+
+// when Details Modal opens get Calibration for this boot
+function getCalibration(){
+   if (connection) {
+    frontEndSettingsData(connection, FrontEndCommand.RecalBoot, bootStore.boot.id);
+  }
+}
+
+
+
+
 
 
 

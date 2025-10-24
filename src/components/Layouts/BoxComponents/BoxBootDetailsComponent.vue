@@ -4,17 +4,17 @@
     <div class="grid grid-cols-4 mb-4">
         <div class="font-medium mb-2">Id</div>
         <div>{{ bootStore.boot.id }}</div>
-        <div class="font-medium">Sensor Id</div>
+        <div class="font-medium">Calibration Id</div>
         <div>{{ bootStore.boot.sensorId }}</div>
         <div class="font-medium mb-2">RFID</div>
         <div>{{ bootStore.boot.rfid }}</div>
-        <div class="font-medium">SensorSerialNumber</div>
+        <div class="font-medium">Sensor Serialnumber</div>
         <div>{{ bootStore.boot.sensorSerialNumber }}</div>
         <div class="font-medium mb-2">Creator Id</div>
         <div>{{ bootStore.boot.userMatrikelNumber }}</div>
         <div class="font-medium">TimeStamp</div>
         <div>{{ formatTimestamp(bootStore.boot.timeStamp) }}</div>
-        <div class="font-medium mb-2">EcuDeviceId</div>
+        <div class="font-medium mb-2">Ecu Device Id</div>
         <div>{{ bootStore.boot.ecuDeviceIdHyphenated }}</div>
         <div class="font-medium">Mac-Address</div>
         <div class="mb-2">{{ bootStore.boot.macAddress }}</div>
@@ -22,9 +22,9 @@
         <div>{{ bootStore.boot.r_Temp_Avg }}</div>
         <div class="font-medium">External Temperature</div>
         <div>{{ bootStore.boot.externalTemperatureSensorAvg }}</div>
-        <div class="font-medium mb-2">Number of EndTests</div>
+        <div class="font-medium mb-2">Number of EndTest</div>
         <div>{{ endTestIds.length }}</div>    
-        <div class="font-medium mb-2">Number of Recals</div>
+        <div class="font-medium mb-2">Number of Calibration</div>
         <div>{{ recalIds.length }}</div>
     </div>
 

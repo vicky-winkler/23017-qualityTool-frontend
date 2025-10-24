@@ -8,12 +8,14 @@ export const useBootStore = defineStore('boot', () => {
     const detailsModal = ref(false);
     const exportModal = ref(false);
     const bootsRfid = ref(null);
+    const bootRecalDataSet = ref(null);
 
     function resetStore(){
         boot.value = null;
         detailsModal.value = false;
         exportModal.value = false;
         bootsRfid.value = null;
+        bootRecalDataSet.value = null;
     }
 
     
@@ -23,6 +25,7 @@ export const useBootStore = defineStore('boot', () => {
         detailsModal,
         exportModal,
         bootsRfid,
+        bootRecalDataSet,
         resetStore,
 
     }
