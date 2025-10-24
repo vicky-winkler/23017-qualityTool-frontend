@@ -3,14 +3,14 @@
   <div class="mb-3 flex items-center gap-8">
     <InputText 
       v-model="filterText" 
-      placeholder="Search OrderId, KitType, SerialNumber, TimeStamp, Creator Id, SensorSerialNumber, RFID, MacAddress or EcuDeviceId"
+      placeholder="Search by Serial Number, IEE Id or RFID"
       style="width: 100%;"
     />
   </div>
   <!-- DATA TABLE -->
     <DataTable ref="dataTable" v-model:selection="selectedDataSet" selectionMode="single"
         :metaKeySelection="false" 
-        :value="filteredBoxes" 
+        :value="filteredConditionedSensors" 
         dataKey="id"
         :paginator="true" 
         :rows="12" 
@@ -21,17 +21,17 @@
         @rowUnselect="onRowUnselect">
 
         <Column field="id" header="Id" sortable style="min-width: 6rem; max-height: 3rem; font-size:medium;"></Column>
-        <Column field="orderId" header="Order Id" sortable style="min-width: 6rem; font-size:medium;"></Column>
-        <Column field="kitType" header="Kit Type" sortable style="min-width: 6rem; font-size:medium;"></Column>
-        <Column field="serialNumber" header="Serialnumber" sortable style="min-width: 6rem; font-size:medium;"></Column>
-        <Column field="matrikelNummer" header="Creator Id" sortable style="min-width: 6rem; font-size:medium;"></Column>
+        <Column field="ovenId" header="Oven Id" sortable style="min-width: 12rem; font-size:medium;"></Column>
+        <Column field="sensorSerialNumber" header="Serial Number" sortable style="min-width: 12rem; font-size:medium;"></Column>
+        <Column field="ieeSensorSerialNumber" header="IEE Id" sortable style="min-width: 12rem; font-size:medium;"></Column>
+        <Column field="rfid" header="RFID" sortable style="min-width: 12rem; font-size:medium;"></Column>
+        <Column field="size" header="Size" sortable style="min-width: 12rem; font-size:medium;"></Column>
         <!-- <Column field="timeStamp" header="Timestamp" sortable style="min-width: 10rem; font-size:x-large;"></Column> -->
-        <Column header="Created" class="p-0 m-0" sortable style="width: 20%; font-size:medium;">
+        <Column header="Created" class="p-0 m-0" sortable style="width: 30%; font-size:medium;">
             <template #body="slotProps">
                 <p>{{ formatTimestamp(slotProps.data.timeStamp) }}</p>
             </template>
         </Column>
-
     </DataTable>
 
     <Toast position="bottom-center" />
@@ -56,8 +56,8 @@ import InputText from 'primevue/inputtext';
 // Messaging and Commands
 
 // Data and Stores
-import { API }  from "../../../services/api/index";
-import { useBoxStore } from "../../../store/boxStore";
+import { API } from "../../../services/api/index";
+import{ useConditionedSensorStore } from "../../../store/conditionedSensorStore";
 
 /* CODE STARTS HERE */
 // init stores
@@ -65,10 +65,10 @@ const toast = useToast();
 const isAdmin = ref(localStorage.getItem("adminToken"))
 
 // local variables
-const boxes = ref();
+const conditionedSensor = ref();
 const selectedDataSet = ref(null);
 const filterText = ref("");
-const boxStore = useBoxStore();
+const conditionedSensorStore = useConditionedSensorStore()
 
 // DataTable
 const filters = ref({
@@ -92,17 +92,23 @@ async function loadData(){
     console.log('fetch data...');
   try {
     // Fetch from API
-    const response = await API.box.getAll();
+    const response = await API.conditionedSensor.getAll();
 
     // console.log('API raw response:', response);
     if (Array.isArray(response)) {
 
+      if (Array.isArray(response.status)) {
+        response.status = response.status.map(s =>
+          s === true || s === "true" || s === 1 || s === "1"
+        );
+      }
+
       // Sort newest first (descending by timeStamp)
       response.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
 
-      boxes.value = response;
+      conditionedSensor.value = response;
 
-      console.log("Loaded array of boxes, count =", boxes.value.length);
+      console.log("Loaded array of conditionedSensor, count =", conditionedSensor.value.length);
       return;
     }
   } catch (error) {
@@ -117,66 +123,46 @@ async function loadData(){
 }
 
 
-const filteredBoxes = computed(() => {
-  if (!filterText.value.trim()) return boxes.value;
+const filteredConditionedSensors = computed(() => {
+  if (!filterText.value.trim()) return conditionedSensor.value;
 
   const search = filterText.value.toLowerCase();
 
-  return boxes.value.filter((b) => {
-    // Convert timestamp to readable date (localized & ISO)
+  return conditionedSensor.value.filter((b) => {
+    // Convert timestamp to readable date (localized & ISO for matching)
     const date = new Date(b.timeStamp);
     const formattedDateDE = date.toLocaleDateString("de-DE"); // e.g. "21.10.2025"
     const formattedDateISO = date.toISOString().split("T")[0]; // e.g. "2025-10-21"
 
-    // Collect base fields
-    const baseFields = [
-      b.orderId,
-      b.kitType,
-      b.serialNumber,
-      b.matrikelNummer,
+    // Search in all relevant fields
+    return [
+      b.sensorSerialNumber,
+      b.rfid,
+      b.ieeSensorSerialNumber,
       formattedDateDE,
       formattedDateISO,
-      b.language,
-      b.version,
-    ];
-
-    // Apply hyphenation to each ECU device ID for better matching
-    const ecuHyphenated = (b.ecuDeviceIds || []).map(deviceIdHyphenated);
-
-    // Safely flatten array fields
-    const arrayFields = [
-      ...(b.sensorTestRFIDs || []),
-      ...(b.sensorSerialNumbers || []),
-      ...(b.macAddresses || []),
-      ...(b.ecuDeviceIds || []),
-      ...ecuHyphenated,          // hyphenated
-    ];
-
-    // Combine everything into one searchable list
-    const allFields = [...baseFields, ...arrayFields];
-
-    // Return true if *any* field (stringified) matches search
-    return allFields.some((val) => {
-      if (val === null || val === undefined) return false;
-      return val.toString().toLowerCase().includes(search);
-    });
+    ].some((val) => val && val.toLowerCase().includes(search));
   });
 });
 
+
+
 // when selecting a row
 const onRowSelect = (event) => {
-  // add to boxStore
-  boxStore.box = event.data;
-  console.log("Selected box:", boxStore.box);
+  // add to singleCell
+  conditionedSensorStore.conditionedSensorSerialNumber = event.data.sensorSerialNumber;
+  conditionedSensorStore.conditionedSensor = event.data;
+  console.log("Selected sensorSerialNumber:", conditionedSensorStore.conditionedSensorSerialNumber);
   selectedDataSet.value = event.data;
-  boxStore.detailsModal = true;
+  conditionedSensorStore.replaceRfidModal = true;
+  console.log("Modal: " +conditionedSensorStore.replaceRfidModal);
 };
 
 
 // when unselecting a row
 const onRowUnselect = (event) => {
-  // update boxStore
-  boxStore.resetStore();
+  // update singleCell
+  conditionedSensorStore.resetStore();
   selectedDataSet.value = null;
 };
 
@@ -197,40 +183,6 @@ function formatTimestamp(timestamp) {
   return `${day}.${month}.${year} ${hours}:${minutes}`;
 }
 
-
-// Sets status of EndTest
-function setStatus(statusArray){
-  return checkAllTrue(statusArray) ? 'PASS' : 'FAIL';
-}
-
-
-// Get Severity for Completed => COMPLETE = GREEN, not COMpleted = RED
-function getSeverity(statusArray){
-  return checkAllTrue(statusArray) ? 'success' : 'danger';
-}
-
-
-// Helper for Status checking
-function checkAllTrue(statusArray){
-  return Array.isArray(statusArray) && statusArray.every((s) => s === true);
-}
-
-// devIdHyphenated
-function deviceIdHyphenated(deviceId) {
-  if (!deviceId || deviceId.length % 2 !== 0) {
-    throw new Error("Invalid device ID format.");
-  }
-
-  const bytes = [];
-
-  for (let i = 0; i < deviceId.length; i += 2) {
-    const hexPair = deviceId.substring(i, i + 2);
-    const decimalValue = parseInt(hexPair, 16);
-    bytes.push(decimalValue.toString());
-  }
-
-  return bytes.join("-");
-}
 
 
 defineExpose({

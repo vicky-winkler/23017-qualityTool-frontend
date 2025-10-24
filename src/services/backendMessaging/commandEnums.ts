@@ -17,6 +17,7 @@ const enum FrontEndCommand
     MeasurementSingleView = 140,
     MeasurementMultiView = 150,
     RFID = 160,
+    ReplaceRfid = 161,  // DATA
 
 }
 

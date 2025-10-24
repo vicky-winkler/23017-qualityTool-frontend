@@ -50,7 +50,7 @@ import { onMounted, onUnmounted, ref } from 'vue';
 
 
 // Stores & Data
-
+import {useSingleCellStore} from "../../../store/singleCellStore";
 
 // Primevue Components
 import Button from 'primevue/button';
@@ -60,7 +60,7 @@ import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 
 // Custom Components
-import {useSingleCellStore} from "../../../store/singleCellStore";
+
 
 
 /* CODE STARTS HERE */
@@ -71,23 +71,18 @@ const singelCellStore = useSingleCellStore();
 
 
 // Format timestamp to something more readable
-function formatTimestamp(timestamp){
-    // parse
-    const dateMs = Date.parse(timestamp);
-    const date = new Date(dateMs);
+function formatTimestamp(timestamp) {
+  if (!timestamp) return "-";
+  const date = new Date(timestamp);
+  if (isNaN(date)) return "-";
 
-    var month = "";
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
 
-    if((date.getMonth()+1) < 10){
-        month = "0" +  (date.getMonth() + 1);
-    }
-    else{
-        month =(date.getMonth() + 1);
-    }
-
-
-    return "" + date.getDate() + "." + month + "." + date.getFullYear() + "\t" + date.getHours() + ":" + date.getMinutes();
-
+  return `${day}.${month}.${year} ${hours}:${minutes}`;
 }
 
 
