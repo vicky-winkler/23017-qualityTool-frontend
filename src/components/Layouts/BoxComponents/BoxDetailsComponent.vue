@@ -26,8 +26,8 @@
         v-for="(rfid, index) in boxStore.box?.sensorTestRFIDs"
         :key="index"
         :imageFileName="'Shoe.jpg'"
-        :imageInfo="`Boot ${index + 1}: ${rfid}`"
-        :itemName="boxStore.box.sensorSerialNumbers[index]"
+        :imageInfo="boxStore.box.sensorSerialNumbers[index]"
+        :itemName="`${rfid}`"
         :ecuDeviceId="deviceIdHyphenated(boxStore.box.ecuDeviceIds[index])"
         :toggle-hover="true"
         @click="openShoe(rfid)"
@@ -48,6 +48,8 @@ import { onMounted, onUnmounted, ref } from 'vue';
 
 // Stores & Data
 import { useBoxStore } from "../../../store/boxStore";
+import { useBootStore } from "../../../store/bootStore"
+import { API } from "../../../services/api/index"
 
 // Primevue Components
 import Button from 'primevue/button';
@@ -65,12 +67,64 @@ import CardComponent from "./CardComponent.vue";
 // init stores
 const toast = useToast();
 const boxStore = useBoxStore();
+const bootStore = useBootStore();
 
 
 // Opens selected shoe
-function openShoe(rfid){
-  console.log("open shoe: " + rfid);
+async function openShoe(rfid){
+  // console.log("open shoe: " + rfid);
+
+  // DB calls
+  await loadShoeDetails(rfid);
+
+    if (bootStore.bootsRfid?.length > 0) {
+    // console.log("Loaded latest shoe:", bootStore.boot.ecuDeviceIdHyphenated);
+    boxStore.shoeDetails = true;
+  } else {
+    console.warn("No data found for RFID:", rfid);
+  }
 }
+
+// Load Shoe Details
+async function loadShoeDetails(rfid) {
+  // console.log('fetch data...');
+  try {
+    // Fetch from API
+    const response = await API.boot.getByRfid(rfid);
+
+    // console.log("response: ", response);
+
+    if (!response || !Array.isArray(response) || response.length === 0) {
+      console.warn('No shoe found for RFID:', rfid);
+      bootStore.boot = null;
+      bootStore.bootsRfid = [];
+      return;
+    }
+
+    // Enrich each entry
+    const enriched = response.map((boot) => ({
+      ...boot,
+      ecuDeviceIdHyphenated: deviceIdHyphenated(boot.ecuDeviceId),
+    }));
+
+    // Sort by newest first (descending by timeStamp)
+    enriched.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
+
+    // Assign to store
+    bootStore.bootsRfid = enriched;
+    bootStore.boot = enriched[0]; // latest entry
+
+  } catch (error) {
+    console.error('API error:', error);
+    toast.add({
+      severity: 'error',
+      summary: 'Network Error',
+      detail: error.message,
+      life: 4000,
+    });
+  }
+}
+
 
 // Format timestamp to something more readable
 function formatTimestamp(timestamp){
@@ -113,14 +167,21 @@ function checkAllTrue(statusArray){
 
 // devIdHyphenated
 function deviceIdHyphenated(deviceId) {
-  if (!deviceId || deviceId.length % 2 !== 0) {
-    throw new Error("Invalid device ID format.");
+  // Handle null/undefined/empty
+  if (!deviceId || typeof deviceId !== 'string') {
+    return 'N/A';
+  }
+
+  // Must be even length and hex-only
+  const cleanId = deviceId.trim();
+  if (cleanId.length % 2 !== 0 || !/^[0-9a-fA-F]+$/.test(cleanId)) {
+    console.warn('Invalid ECU device ID format:', deviceId);
+    return deviceId; // fallback to raw value
   }
 
   const bytes = [];
-
-  for (let i = 0; i < deviceId.length; i += 2) {
-    const hexPair = deviceId.substring(i, i + 2);
+  for (let i = 0; i < cleanId.length; i += 2) {
+    const hexPair = cleanId.substring(i, i + 2);
     const decimalValue = parseInt(hexPair, 16);
     bytes.push(decimalValue.toString());
   }

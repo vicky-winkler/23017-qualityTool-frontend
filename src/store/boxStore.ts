@@ -6,12 +6,14 @@ export const useBoxStore = defineStore('box', () => {
     
     const box = ref(null);
     const detailsModal = ref(false);
+    const shoeDetails = ref(false);
     const exportModal = ref(false);
 
     function resetStore(){
         box.value = null;
         detailsModal.value = false;
         exportModal.value = false;
+        shoeDetails.value = false;
     }
 
     
@@ -20,6 +22,7 @@ export const useBoxStore = defineStore('box', () => {
         box,
         detailsModal,
         exportModal,
+        shoeDetails,
         resetStore,
 
     }

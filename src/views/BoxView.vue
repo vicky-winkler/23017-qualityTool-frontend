@@ -36,11 +36,12 @@
     <Dialog v-model:visible="boxStore.detailsModal" modal :style="{ width: '80%' }" class="text-base" :draggable="false">
         <template #header>
           <div class="flex items-center justify-between py-2 text-white rounded-t-md">
-            <h3 class="text-3xl">Box Details: {{ boxStore.box.serialNumber }}</h3>
+            <h3 class="text-3xl">Box Details: {{ boxStore.box?.serialNumber }}</h3>
           </div>
         </template>
         <!-- Details Modal Component -->
-         <BoxDetailsComponent/>
+        <BoxBootDetailsComponent v-if="boxStore.shoeDetails"/>
+        <BoxDetailsComponent v-else/> 
     </Dialog>
   </template>
 
@@ -86,7 +87,7 @@ import { useToast } from "primevue/usetoast";
 // Custom Components
 import BoxTableComponent from "../components/Layouts/BoxComponents/BoxTableComponent.vue";
 import BoxDetailsComponent from "../components/Layouts/BoxComponents/BoxDetailsComponent.vue";
-
+import BoxBootDetailsComponent from "../components/Layouts/BoxComponents/BoxBootDetailsComponent.vue";
 
 /* CODE STARTS HERE */
 

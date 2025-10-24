@@ -11,13 +11,13 @@
             <!-- Additional INFO -->
             <!-- Additional Info when scanned -->
              <!-- RFID -->
-            <p v-if="imageInfo !== ''" class="text-white text-lg text-center uppercase addInfoToImageGreen">{{ imageInfo }}</p>
+            <p v-if="imageInfo !== ''" class="text-white text-lg text-center addInfoToImageGreen">{{ imageInfo }}</p>
         </div>
 
         <!-- Item Name Shoe SerialNumber -->
-        <h1 v-if="itemName !== ''" class="text-white text-lg uppercase text-center">{{ itemName }}</h1>
+        <h1 v-if="itemName !== ''" class="text-white text-lg text-center">RFID: {{ itemName }}</h1>
         <!-- Item Name Shoe SerialNumber -->
-        <h1 v-if="ecuDeviceId !== ''" class="text-white text-lg uppercase text-center">{{ ecuDeviceId }}</h1>
+        <h1 v-if="ecuDeviceId !== ''" class="text-white text-lg text-center">Ecu Device Id: {{ ecuDeviceId }}</h1>
     </div>
   
 </template>

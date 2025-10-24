@@ -95,7 +95,7 @@ onMounted(async () => {
 
 // load Data from DB
 async function loadData(){
-    console.log('fetch data...');
+  console.log('fetch data...');
   try {
     // Fetch from API
     const response = await API.boot.getAll();
